@@ -1,0 +1,5 @@
+Eveything is a widget.
+Flutter uses a widget tree.
+Flutter framework uses Dart (language)
+Flutter has its own native code for android and iOS. 
+pubsec defines dependencies for libraries etc.
