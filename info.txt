@@ -3,3 +3,15 @@ Flutter uses a widget tree.
 Flutter framework uses Dart (language)
 Flutter has its own native code for android and iOS. 
 pubsec defines dependencies for libraries etc.
+
+every widget needs to extend StatelessWidget or stateful. It calls the build method.
+
+Visible widgets (output and input) & invisible widgets (layout & control)
+
+State of a widget:
+    -> data/info used by widget
+    -> you cant change state of StatelessWidget 
+    -> StatefulWidget can have its state changes
+    -> State is persistent. Hence it should be in another class.
+    -> When State changes, the widget is rebuilt, but state is not rewritten.
+    -> setState updates the Widget by calling its build method.
