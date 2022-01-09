@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
+import 'ui/main_page/main_expenses_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,6 @@ class _MyAppState extends State<MyApp> {
   var _placeholderString = 0;
 
   void _openDetailsPage() {
-
     // setState updates the Widget by calling its build method.
     setState(() {
       _placeholderString += 1;
@@ -41,29 +41,33 @@ class _MyAppState extends State<MyApp> {
     // home is the core widget that flutter brings onto the screen.
     return MaterialApp(
       home: Scaffold(
-        body: Column(
-          children: [
-            Text(
-              "This number will keep getting incremented: " +
-                  _placeholderString.toString(),
-            ),
-            ElevatedButton(
-              onPressed: _openDetailsPage,
-              child: Text('Entertainment'),
-            ),
-            ElevatedButton(
-              onPressed: _openDetailsPage,
-              child: Text('Food'),
-            ),
-            ElevatedButton(
-              onPressed: _openDetailsPage,
-              child: Text('Misc.'),
-            ),
-            ElevatedButton(
-              onPressed: _resetState,
-              child: Text('Reset'),
-            )
-          ],
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: null,
+                child: Text("Empty"),
+              ),
+              MainExpensesWidget(),
+              ElevatedButton(
+                onPressed: _openDetailsPage,
+                child: Text('Entertainment'),
+              ),
+              ElevatedButton(
+                onPressed: _openDetailsPage,
+                child: Text('Food'),
+              ),
+              ElevatedButton(
+                onPressed: _openDetailsPage,
+                child: Text('Misc.'),
+              ),
+              ElevatedButton(
+                onPressed: _resetState,
+                child: Text('Reset'),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -15,3 +15,6 @@ State of a widget:
     -> State is persistent. Hence it should be in another class.
     -> When State changes, the widget is rebuilt, but state is not rewritten.
     -> setState updates the Widget by calling its build method.
+
+use a Container widget to wrap other widgets
+    -> Margin | Border | Padding | child
