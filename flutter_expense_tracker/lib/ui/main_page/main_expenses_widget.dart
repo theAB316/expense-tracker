@@ -14,6 +14,7 @@ class _MainExpensesWidgetState extends State<MainExpensesWidget> {
   @override
   Widget build(BuildContext context) {
     return SquircleWidget(
+      colors: [Colors.blue, Colors.purple, Colors.redAccent.shade100],
       child: Text(
         "This number will keep getting incremented: ",
       ),
