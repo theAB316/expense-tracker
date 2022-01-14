@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:ui';
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
-import 'ui/main_page/main_expenses_widget.dart';
+import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
+import 'package:flutter_expense_tracker/ui/utils/constants.dart';
+import 'ui/screens/main_expenses_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,38 +41,45 @@ class _MyAppState extends State<MyApp> {
   // context: holds some info about our app
   @override
   Widget build(BuildContext context) {
+    double screenWidth = window.physicalSize.width;
     // home is the core widget that flutter brings onto the screen.
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: null,
-                child: Text("Empty"),
-              ),
-              MainExpensesWidget(),
-              ElevatedButton(
-                onPressed: _openDetailsPage,
-                child: Text('Entertainment'),
-              ),
-              ElevatedButton(
-                onPressed: _openDetailsPage,
-                child: Text('Food'),
-              ),
-              ElevatedButton(
-                onPressed: _openDetailsPage,
-                child: Text('Misc.'),
-              ),
-              ElevatedButton(
-                onPressed: _resetState,
-                child: Text('Reset'),
-              )
-            ],
-          ),
-        ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: COLOR_WHITE,
+        textTheme: screenWidth < 500 ? TEXT_THEME_SMALL: TEXT_THEME_DEFAULT,
       ),
+      home: MainScreen(),
+      // home: Scaffold(
+      //   body: Center(
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.center,
+      //       children: [
+      //         ElevatedButton(
+      //           onPressed: null,
+      //           child: Text("Empty"),
+      //         ),
+      //         MainScreen(),
+      //         ElevatedButton(
+      //           onPressed: _openDetailsPage,
+      //           child: Text('Entertainment'),
+      //         ),
+      //         ElevatedButton(
+      //           onPressed: _openDetailsPage,
+      //           child: Text('Food'),
+      //         ),
+      //         ElevatedButton(
+      //           onPressed: _openDetailsPage,
+      //           child: Text('Misc.'),
+      //         ),
+      //         ElevatedButton(
+      //           onPressed: _resetState,
+      //           child: Text('Reset'),
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 }
