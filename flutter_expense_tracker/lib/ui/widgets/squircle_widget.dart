@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cupertino_rounded_corners/cupertino_rounded_corners.dart'; // For SquircleBorder
+import 'package:cupertino_rounded_corners/cupertino_rounded_corners.dart';
+import 'package:flutter_expense_tracker/ui/utils/constants.dart'; // For SquircleBorder
 
 class SquircleWidget extends StatelessWidget {
   List<Color> colors;
@@ -11,10 +12,10 @@ class SquircleWidget extends StatelessWidget {
   SquircleWidget({
     Key? key,
     this.colors = const [Colors.blue, Colors.purpleAccent, Colors.deepOrangeAccent],
-    this.margin = const EdgeInsets.all(10.0),
+    this.margin = const EdgeInsets.all(0.0),
     this.shadowElevation = 8.0,
     this.child = const SizedBox.shrink(),
-    this.childPadding = const EdgeInsets.all(30.0),
+    this.childPadding = const EdgeInsets.all(PADDING_VALUE),
   }) : super(key: key);
 
   @override

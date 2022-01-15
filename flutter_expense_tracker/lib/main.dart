@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
-import 'ui/screens/main_expenses_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,6 +46,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: COLOR_WHITE,
+        scaffoldBackgroundColor: COLOR_BLUE_GREY,
         textTheme: screenWidth < 500 ? TEXT_THEME_SMALL: TEXT_THEME_DEFAULT,
       ),
       home: MainScreen(),

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import '../widgets/squircle_widget.dart';
+import 'package:flutter_expense_tracker/ui/utils/constants.dart';
+import 'squircle_widget.dart';
 
 class MainExpensesWidget extends StatefulWidget {
   // const MainExpensesWidget({ Key? key }) : super(key: key);
@@ -14,29 +14,29 @@ class MainExpensesWidget extends StatefulWidget {
 
 class _MainExpensesWidgetState extends State<MainExpensesWidget> {
 // Class variables
-  double totalExpenses = 0.0;
+  double totalExpenses = 10000.0;
 
   @override
   Widget build(BuildContext context) {
+
+    ThemeData themeData = Theme.of(context);
+    double screenWidth = window.physicalSize.width;
+
     return Container(
-      
+      width: screenWidth,
       child: SquircleWidget(
-        colors: [
-          Colors.blue,
-          Colors.purpleAccent.shade100,
-          Colors.redAccent.shade100
-        ],
+        colors: MAIN_EXPENSES_WIDGET_COLOURS,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               "Total Expenses",
-              style: TextStyle(color: Colors.white),
+              style: themeData.textTheme.headline4,
             ),
-            // Spacer(flex: 1),
+            addVerticleSpace(PADDING_VALUE),
             Text(
               "Rs. " + totalExpenses.toString(),
-              style: TextStyle(color: Colors.white),
+              style: themeData.textTheme.headline1,
             ),
           ],
         ),
