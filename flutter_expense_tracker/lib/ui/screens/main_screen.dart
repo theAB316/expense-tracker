@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/border_box_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/squircle_widget.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _MainScreenState extends State<MainScreen> {
   double screenWidth = window.physicalSize.width;
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -40,7 +42,45 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               addVerticleSpace(PADDING_VALUE),
-              Padding(padding: SYMMETRIC_PADDING_HORIZONTAL, child: MainExpensesWidget())
+              Padding(
+                  padding: SYMMETRIC_PADDING_HORIZONTAL,
+                  child: MainExpensesWidget()),
+              addVerticleSpace(PADDING_VALUE + 10),
+              Padding(
+                padding: SYMMETRIC_PADDING_HORIZONTAL,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment
+                      .spaceBetween, // to move both borderboxes to opposite ends
+                  children: [
+                    Text(
+                      "Transactions",
+                      style: themeData.textTheme.headline5,
+                    ),
+                    Text(
+                      "View All",
+                      style: themeData.textTheme.headline5,
+                    ),
+                  ],
+                ),
+              ),
+              addVerticleSpace(0),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                    children: CATEGORIES_LIST
+                        .map(
+                          (category) => Padding(
+                            padding: SYMMETRIC_PADDING_ALL,
+                            child: Container(
+                              width: screenWidth,
+                              child: SquircleWidget(
+                                child: Text(category),
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList()),
+              )
             ],
           ),
         ),

@@ -18,7 +18,6 @@ class _MainExpensesWidgetState extends State<MainExpensesWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     ThemeData themeData = Theme.of(context);
     double screenWidth = window.physicalSize.width;
 
@@ -35,7 +34,7 @@ class _MainExpensesWidgetState extends State<MainExpensesWidget> {
             ),
             addVerticleSpace(PADDING_VALUE),
             Text(
-              "Rs. " + totalExpenses.toString(),
+              RUPPEE_SYMBOL + " " + totalExpenses.toString(),
               style: themeData.textTheme.headline1,
             ),
           ],

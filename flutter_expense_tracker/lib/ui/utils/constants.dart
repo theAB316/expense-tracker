@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
 
-const double PADDING_VALUE = 25;
-const EdgeInsets SYMMETRIC_PADDING_HORIZONTAL = EdgeInsets.symmetric(horizontal: 25);
+///////////// Constants that might be changed //////////////////
 
-const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);
-const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
-final COLOR_BLUE_GREY = Colors.blueGrey.shade50;
-const COLOR_WHITE = Colors.white;
-const COLOR_DARK_BLUE = Color.fromRGBO(20, 25, 45, 1.0);
+final CATEGORIES_LIST = [
+  "Food & Essentials",
+  "Shopping",
+  "Entertainment",
+];
 
 final MAIN_EXPENSES_WIDGET_COLOURS = [
   Colors.blue,
   Colors.purpleAccent.shade100,
   Colors.redAccent.shade100
 ];
+
+////////////////////////////////////////////////////////////////
+
+const RUPPEE_SYMBOL = '\u{20B9}';
+
+const double PADDING_VALUE = 25;
+const EdgeInsets SYMMETRIC_PADDING_HORIZONTAL =
+    EdgeInsets.symmetric(horizontal: 25);
+
+const EdgeInsets SYMMETRIC_PADDING_ALL =
+    EdgeInsets.symmetric(horizontal: 25, vertical: 10);
+
+const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);
+const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
+final COLOR_BLUE_GREY = Colors.blueGrey.shade50;
+const COLOR_WHITE = Colors.white;
+const COLOR_DARK_BLUE = Color.fromRGBO(20, 25, 45, 1.0);
 
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline1: TextStyle(
@@ -25,7 +41,7 @@ const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline4: TextStyle(
         color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 16),
     headline5: TextStyle(
-        color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 14),
+        color: COLOR_BLACK, fontWeight: FontWeight.w700, fontSize: 16),
     headline6: TextStyle(
         color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 12),
     bodyText1: TextStyle(

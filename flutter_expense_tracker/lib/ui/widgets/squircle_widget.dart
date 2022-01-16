@@ -11,7 +11,7 @@ class SquircleWidget extends StatelessWidget {
 
   SquircleWidget({
     Key? key,
-    this.colors = const [Colors.blue, Colors.purpleAccent, Colors.deepOrangeAccent],
+    this.colors = const [Colors.white, Colors.white],
     this.margin = const EdgeInsets.all(0.0),
     this.shadowElevation = 8.0,
     this.child = const SizedBox.shrink(),
@@ -29,7 +29,8 @@ class SquircleWidget extends StatelessWidget {
             Radius.elliptical(40.0, 40.0),
           ),
         ),
-        clipBehavior: Clip.antiAlias, // so that gradient is contained to rounded border
+        clipBehavior:
+            Clip.antiAlias, // so that gradient is contained to rounded border
         elevation: shadowElevation,
         child: Container(
           padding: childPadding,
