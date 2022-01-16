@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:badges/badges.dart';
 
 class BottomNavBarWidget extends StatefulWidget {
   const BottomNavBarWidget({Key? key}) : super(key: key);
@@ -15,8 +15,6 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
   int badge = 0;
   final padding = EdgeInsets.symmetric(horizontal: 18, vertical: 12);
   double gap = 10;
-
-  PageController controller = PageController();
 
   List<Color> colors = [
     Colors.purple,
@@ -50,75 +48,43 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
         child: GNav(
           tabs: [
-            GButton(
-              gap: gap,
-              iconActiveColor: Colors.purple,
-              iconColor: Colors.black,
-              textColor: Colors.purple,
-              backgroundColor: Colors.purple.withOpacity(.2),
-              iconSize: 24,
-              padding: padding,
-              icon: LineIcons.home,
-              text: 'Home',
-            ),
-            GButton(
-              gap: gap,
-              iconActiveColor: Colors.pink,
-              iconColor: Colors.black,
-              textColor: Colors.pink,
-              backgroundColor: Colors.pink.withOpacity(.2),
-              iconSize: 24,
-              padding: padding,
-              icon: LineIcons.heart,
-              leading: selectedIndex == 1 || badge == 0
-                  ? null
-                  : Badge(
-                      badgeColor: Colors.red.shade100,
-                      elevation: 0,
-                      position: BadgePosition.topEnd(top: -12, end: -12),
-                      badgeContent: Text(
-                        badge.toString(),
-                        style: TextStyle(color: Colors.red.shade900),
-                      ),
-                      child: Icon(
-                        LineIcons.heart,
-                        color: selectedIndex == 1 ? Colors.pink : Colors.black,
-                      ),
-                    ),
-              text: 'Likes',
-            ),
-            GButton(
-              gap: gap,
-              iconActiveColor: Colors.amber[600],
-              iconColor: Colors.black,
-              textColor: Colors.amber[600],
-              backgroundColor: Colors.amber[600]!.withOpacity(.2),
-              iconSize: 24,
-              padding: padding,
-              icon: LineIcons.search,
-              text: 'Search',
-            ),
-            GButton(
-              gap: gap,
-              iconActiveColor: Colors.teal,
-              iconColor: Colors.black,
-              textColor: Colors.teal,
-              backgroundColor: Colors.teal.withOpacity(.2),
-              iconSize: 24,
-              padding: padding,
-              icon: LineIcons.user,
-              text: 'Profile',
-            )
+            createGButtonWithGradient(LineIcons.home, "Home"),
+            createGButtonWithGradient(LineIcons.infoCircle, "Info"),
+            createGButtonWithGradient(LineIcons.search, "Search"),
+            createGButtonWithGradient(LineIcons.plus, "Add")
           ],
           selectedIndex: selectedIndex,
           onTabChange: (index) {
             setState(() {
               selectedIndex = index;
             });
-            controller.jumpToPage(index);
           },
         ),
       ),
     );
   }
+}
+
+GButton createGButtonWithGradient(IconData icon, String text) {
+  TextStyle headline4 =
+      TextStyle(color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 16);
+
+  return GButton(
+    gap: 10,
+    iconActiveColor: COLOR_WHITE,
+    iconColor: Colors.black,
+    textColor: COLOR_WHITE,
+    textStyle: headline4,
+    backgroundGradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: MAIN_EXPENSES_WIDGET_COLOURS.reversed
+            .toList()
+            .map((entry) => entry.withOpacity(0.8))
+            .toList()),
+    iconSize: 24,
+    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+    icon: icon,
+    text: text,
+  );
 }

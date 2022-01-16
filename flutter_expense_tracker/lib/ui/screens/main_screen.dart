@@ -70,6 +70,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         bottomNavigationBar: SafeArea(child: BottomNavBarWidget()),
+        extendBody: true,
       ),
     );
   }
