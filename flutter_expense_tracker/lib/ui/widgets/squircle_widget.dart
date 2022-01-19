@@ -11,7 +11,7 @@ class SquircleWidget extends StatelessWidget {
 
   SquircleWidget({
     Key? key,
-    this.colors = const [Colors.white, Colors.white],
+    this.colors = const [Colors.white],
     this.margin = const EdgeInsets.all(0.0),
     this.shadowElevation = 8.0,
     this.child = const SizedBox.shrink(),
@@ -34,13 +34,16 @@ class SquircleWidget extends StatelessWidget {
         elevation: shadowElevation,
         child: Container(
           padding: childPadding,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: colors,
-            ),
-          ),
+          color: (colors.length == 1) ? colors[0] : null,
+          decoration: (colors.length == 1)
+              ? null
+              : BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: colors,
+                  ),
+                ),
           child: child,
         ),
       ),

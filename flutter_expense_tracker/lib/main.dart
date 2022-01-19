@@ -46,40 +46,10 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: COLOR_WHITE,
-        scaffoldBackgroundColor: COLOR_BLUE_GREY,
-        textTheme: screenWidth < 500 ? TEXT_THEME_SMALL: TEXT_THEME_DEFAULT,
+        scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
+        textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
       ),
       home: MainScreen(),
-      // home: Scaffold(
-      //   body: Center(
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.center,
-      //       children: [
-      //         ElevatedButton(
-      //           onPressed: null,
-      //           child: Text("Empty"),
-      //         ),
-      //         MainScreen(),
-      //         ElevatedButton(
-      //           onPressed: _openDetailsPage,
-      //           child: Text('Entertainment'),
-      //         ),
-      //         ElevatedButton(
-      //           onPressed: _openDetailsPage,
-      //           child: Text('Food'),
-      //         ),
-      //         ElevatedButton(
-      //           onPressed: _openDetailsPage,
-      //           child: Text('Misc.'),
-      //         ),
-      //         ElevatedButton(
-      //           onPressed: _resetState,
-      //           child: Text('Reset'),
-      //         )
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 }

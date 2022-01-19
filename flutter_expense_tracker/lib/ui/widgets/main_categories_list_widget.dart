@@ -1,11 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
-import 'package:flutter_expense_tracker/ui/widgets/border_box_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/squircle_widget.dart';
 
 class MainCategoriesListWidget extends StatefulWidget {
-  const MainCategoriesListWidget({Key? key}) : super(key: key);
+  ScrollController controller;
+  MainCategoriesListWidget({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   _MainCategoriesListWidgetState createState() =>
@@ -18,6 +19,7 @@ class _MainCategoriesListWidgetState extends State<MainCategoriesListWidget> {
     ThemeData themeData = Theme.of(context);
     double screenWidth = window.physicalSize.width;
     return SingleChildScrollView(
+      controller: widget.controller,
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
 
@@ -57,9 +59,5 @@ class _MainCategoriesListWidgetState extends State<MainCategoriesListWidget> {
             .toList(),
       ),
     );
-
-    // lol: CATEGORIES_MAP.entries.map((entry) => Padding(
-    //           padding: SYMMETRIC_PADDING_ALL,
-    //           child: Container(width: screenWidth, child: SquircleWidget(child: Text(category))
   }
 }

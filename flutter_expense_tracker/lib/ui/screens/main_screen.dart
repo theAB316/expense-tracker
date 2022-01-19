@@ -5,6 +5,7 @@ import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/border_box_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_categories_list_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -12,6 +13,19 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late ScrollController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   double screenWidth = window.physicalSize.width;
   @override
   Widget build(BuildContext context) {
@@ -65,11 +79,12 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
               addVerticleSpace(10),
-              Expanded(child: MainCategoriesListWidget())
+              Expanded(child: MainCategoriesListWidget(controller: controller))
             ],
           ),
         ),
-        bottomNavigationBar: SafeArea(child: BottomNavBarWidget()),
+        bottomNavigationBar: ScrollToHideWidget(
+            controller: controller, child: BottomNavBarWidget()),
         extendBody: true,
       ),
     );

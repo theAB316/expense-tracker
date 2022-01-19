@@ -44,7 +44,8 @@ const EdgeInsets SYMMETRIC_PADDING_ALL =
 
 const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);
 const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
-final COLOR_BLUE_GREY = Colors.blueGrey.shade50;
+final COLOR_LIGHT_BLUE_GREY = Colors.blueGrey.shade50;
+const COLOR_BLUE_GREY = Color(0xFF455A54); // Colors.blueGrey.shade700;
 const COLOR_WHITE = Colors.white;
 const COLOR_DARK_BLUE = Color.fromRGBO(20, 25, 45, 1.0);
 final COLOR_YELLOW = Colors.yellow.shade700;
@@ -62,7 +63,7 @@ const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline4: TextStyle(
         color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 16),
     headline5: TextStyle(
-        color: COLOR_BLACK, fontWeight: FontWeight.w700, fontSize: 16),
+        color: COLOR_BLUE_GREY, fontWeight: FontWeight.w700, fontSize: 16),
     headline6: TextStyle(
         color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 12),
     bodyText1: TextStyle(
