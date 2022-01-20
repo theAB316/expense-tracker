@@ -8,84 +8,71 @@ import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
+  final ScrollController controller;
+
+  const MainScreen({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late ScrollController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  double screenWidth = window.physicalSize.width;
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
     final Size size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          width: size.width,
-          height: size.height,
-          child: Column(
-            children: [
-              addVerticleSpace(PADDING_VALUE),
-              Padding(
-                padding: SYMMETRIC_PADDING_HORIZONTAL,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween, // to move both borderboxes to opposite ends
-                  children: [
-                    BorderBoxWidget(
-                        height: 50,
-                        width: 50,
-                        child: Icon(Icons.menu, color: COLOR_GREY)),
-                    BorderBoxWidget(
-                        height: 50,
-                        width: 50,
-                        child: Icon(Icons.settings, color: COLOR_GREY))
-                  ],
-                ),
-              ),
-              addVerticleSpace(PADDING_VALUE),
-              Padding(
-                  padding: SYMMETRIC_PADDING_HORIZONTAL,
-                  child: MainExpensesWidget()),
-              addVerticleSpace(PADDING_VALUE + 10),
-              Padding(
-                padding: SYMMETRIC_PADDING_HORIZONTAL,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment
-                      .spaceBetween, // to move both borderboxes to opposite ends
-                  children: [
-                    Text(
-                      "Transactions",
-                      style: themeData.textTheme.headline5,
-                    ),
-                    Text(
-                      "View All",
-                      style: themeData.textTheme.headline5,
-                    ),
-                  ],
-                ),
-              ),
-              addVerticleSpace(10),
-              Expanded(child: MainCategoriesListWidget(controller: controller))
-            ],
+    return Container(
+      width: size.width,
+      height: size.height,
+      child: Column(
+        children: [
+          addVerticleSpace(PADDING_VALUE),
+          Padding(
+            padding: SYMMETRIC_PADDING_HORIZONTAL,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceBetween, // to move both borderboxes to opposite ends
+              children: [
+                BorderBoxWidget(
+                    height: 50,
+                    width: 50,
+                    child: Icon(Icons.menu, color: COLOR_GREY)),
+                BorderBoxWidget(
+                    height: 50,
+                    width: 50,
+                    child: Icon(Icons.settings, color: COLOR_GREY))
+              ],
+            ),
           ),
-        ),
-        bottomNavigationBar: ScrollToHideWidget(
-            controller: controller, child: BottomNavBarWidget()),
-        extendBody: true,
+          addVerticleSpace(PADDING_VALUE),
+          Padding(
+              padding: SYMMETRIC_PADDING_HORIZONTAL,
+              child: MainExpensesWidget()),
+          addVerticleSpace(PADDING_VALUE + 10),
+          Padding(
+            padding: SYMMETRIC_PADDING_HORIZONTAL,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment
+                  .spaceBetween, // to move both borderboxes to opposite ends
+              children: [
+                Text(
+                  "Transactions",
+                  style: themeData.textTheme.headline5,
+                ),
+                Text(
+                  "View All",
+                  style: themeData.textTheme.headline5,
+                ),
+              ],
+            ),
+          ),
+          addVerticleSpace(10),
+          Expanded(
+              child: MainCategoriesListWidget(controller: widget.controller))
+        ],
       ),
     );
   }

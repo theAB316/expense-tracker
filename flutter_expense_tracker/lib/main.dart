@@ -4,6 +4,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
+import 'package:flutter_expense_tracker/ui/widgets/bottom_nav_bar_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
+
+import 'ui/screens/add_screen.dart';
+import 'ui/screens/more_info_screen.dart';
+import 'ui/screens/search_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,29 +17,41 @@ void main() {
 
 class MyApp extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _MyAppState();
-  }
+  State<StatefulWidget> createState() => _MyAppState();
 }
 
 // underscore makes the MyAppState class private
 class _MyAppState extends State<MyApp> {
-  var _placeholderString = 0;
+  // For screen change on tap of bottom navbar  items
+  int selected_index = 0;
 
-  void _openDetailsPage() {
-    // setState updates the Widget by calling its build method.
-    setState(() {
-      _placeholderString += 1;
-    });
-    print("_openDetailsPage called");
+  // Will be initialized inside initState()
+  late List screens;
+
+  // Controller is used to hide/show the bottom navbar, based on scroll direction
+  late ScrollController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = ScrollController();
+
+    // Init the screens here (since controller is not accessible outside)
+    screens = [
+      MainScreen(
+        controller: controller,
+      ),
+      MoreInfoScreen(),
+      SearchScreen(),
+      AddScreen(),
+    ];
   }
 
-  void _resetState() {
-    setState(() {
-      _placeholderString = 0;
-    });
-    print("_resetState called");
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   // Special method required to be implemented (Flutter calls this method)
@@ -43,13 +61,24 @@ class _MyAppState extends State<MyApp> {
     double screenWidth = window.physicalSize.width;
     // home is the core widget that flutter brings onto the screen.
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: COLOR_WHITE,
-        scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
-        textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
-      ),
-      home: MainScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: COLOR_WHITE,
+          scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
+          textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
+        ),
+        // home: MainScreen(),
+        home: SafeArea(
+          child: Scaffold(
+            body: screens[selected_index],
+            bottomNavigationBar: ScrollToHideWidget(
+              controller: controller,
+              child: BottomNavBarWidget(
+                selected_index: selected_index,
+              ),
+            ),
+            extendBody: true,
+          ),
+        ));
   }
 }

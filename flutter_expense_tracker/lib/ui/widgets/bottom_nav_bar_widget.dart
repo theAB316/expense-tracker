@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class BottomNavBarWidget extends StatefulWidget {
-  const BottomNavBarWidget({Key? key}) : super(key: key);
+  int selected_index;
+
+  BottomNavBarWidget({
+    Key? key,
+    required this.selected_index,
+  }) : super(key: key);
 
   @override
   _BottomNavBarWidgetState createState() => _BottomNavBarWidgetState();
 }
 
 class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
-  int selectedIndex = 0;
-  int badge = 0;
-  final padding = EdgeInsets.symmetric(horizontal: 18, vertical: 12);
-  double gap = 10;
-
-  List<Color> colors = [
-    Colors.purple,
-    Colors.pink,
-    Colors.amber[600]!,
-    Colors.teal
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -53,10 +50,11 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
             createGButtonWithGradient(LineIcons.search, "Search"),
             createGButtonWithGradient(LineIcons.plus, "Add")
           ],
-          selectedIndex: selectedIndex,
+          selectedIndex: widget.selected_index,
           onTabChange: (index) {
+            print("inside tabChange and index: $index");
             setState(() {
-              selectedIndex = index;
+              widget.selected_index = index;
             });
           },
         ),
