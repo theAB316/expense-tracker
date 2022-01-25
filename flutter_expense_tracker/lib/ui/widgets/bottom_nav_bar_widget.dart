@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
-import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
-import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
-import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class BottomNavBarWidget extends StatefulWidget {
-  int selected_index;
-
-  BottomNavBarWidget({
+  const BottomNavBarWidget({
     Key? key,
-    required this.selected_index,
   }) : super(key: key);
 
   @override
@@ -45,29 +38,45 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
         padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
         child: GNav(
           tabs: [
-            createGButtonWithGradient(LineIcons.home, "Home"),
-            createGButtonWithGradient(LineIcons.infoCircle, "Info"),
-            createGButtonWithGradient(LineIcons.search, "Search"),
-            createGButtonWithGradient(LineIcons.plus, "Add")
+            createGButtonWithGradient(LineIcons.home, "Home", context),
+            createGButtonWithGradient(LineIcons.infoCircle, "Info", context),
+            createGButtonWithGradient(LineIcons.search, "Search", context),
+            createGButtonWithGradient(LineIcons.plus, "Add", context)
           ],
-          selectedIndex: widget.selected_index,
-          onTabChange: (index) {
-            print("inside tabChange and index: $index");
-            setState(() {
-              widget.selected_index = index;
-            });
-          },
         ),
       ),
     );
   }
 }
 
-GButton createGButtonWithGradient(IconData icon, String text) {
-  TextStyle headline4 =
-      TextStyle(color: COLOR_WHITE, fontWeight: FontWeight.w700, fontSize: 16);
+GButton createGButtonWithGradient(
+    IconData icon, String text, BuildContext context) {
+  TextStyle headline4 = TextStyle(
+    color: COLOR_WHITE,
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+  );
+
+  var screenRouteName;
+  switch (text) {
+    case 'Home':
+      screenRouteName = '/';
+      break;
+    case 'Info':
+      screenRouteName = '/more-info';
+      break;
+    case 'Search':
+      screenRouteName = '/search';
+      break;
+    case 'Add':
+      screenRouteName = '/add';
+      break;
+  }
 
   return GButton(
+    onPressed: () {
+      Navigator.pushNamed(context, screenRouteName);
+    },
     gap: 10,
     iconActiveColor: COLOR_WHITE,
     iconColor: Colors.black,

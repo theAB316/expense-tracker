@@ -70,12 +70,31 @@ class _MyAppState extends State<MyApp> {
         // home: MainScreen(),
         home: SafeArea(
           child: Scaffold(
-            body: screens[selected_index],
+            body: Navigator(
+              onGenerateRoute: (RouteSettings settings) {
+                return MaterialPageRoute(
+                  settings: settings,
+                  builder: (BuildContext context) {
+                    switch (settings.name) {
+                      case '/':
+                        return screens[0];
+                      case '/more-info':
+                        return screens[1];
+                      case '/search':
+                        return screens[2];
+                      case '/add':
+                        return screens[3];
+                      default:
+                        throw Exception('Invalid route: ${settings.name}');
+                    }
+                  },
+                );
+              },
+            ),
+            // screens[selected_index],
             bottomNavigationBar: ScrollToHideWidget(
               controller: controller,
-              child: BottomNavBarWidget(
-                selected_index: selected_index,
-              ),
+              child: BottomNavBarWidget(),
             ),
             extendBody: true,
           ),
