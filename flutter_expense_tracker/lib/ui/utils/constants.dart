@@ -2,6 +2,9 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
+// For screen change on tap of bottom navbar items
+int SELECTED_INDEX = 0;
+
 // To create category list in MainScreen
 class Category {
   String name = "";

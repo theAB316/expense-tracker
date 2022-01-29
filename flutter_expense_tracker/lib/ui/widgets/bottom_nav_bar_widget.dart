@@ -4,8 +4,11 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
 class BottomNavBarWidget extends StatefulWidget {
+  final PageController pageController;
+
   const BottomNavBarWidget({
     Key? key,
+    required this.pageController,
   }) : super(key: key);
 
   @override
@@ -37,11 +40,16 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 3),
         child: GNav(
+          selectedIndex: SELECTED_INDEX,
+          onTabChange: (index) {
+            SELECTED_INDEX = index;
+            widget.pageController.jumpToPage(index);
+          },
           tabs: [
-            createGButtonWithGradient(LineIcons.home, "Home", context),
-            createGButtonWithGradient(LineIcons.infoCircle, "Info", context),
-            createGButtonWithGradient(LineIcons.search, "Search", context),
-            createGButtonWithGradient(LineIcons.plus, "Add", context)
+            createGButtonWithGradient(LineIcons.home, "Home"),
+            createGButtonWithGradient(LineIcons.infoCircle, "Info"),
+            createGButtonWithGradient(LineIcons.search, "Search"),
+            createGButtonWithGradient(LineIcons.plus, "Add")
           ],
         ),
       ),
@@ -49,34 +57,14 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
   }
 }
 
-GButton createGButtonWithGradient(
-    IconData icon, String text, BuildContext context) {
+GButton createGButtonWithGradient(IconData icon, String text) {
   TextStyle headline4 = TextStyle(
     color: COLOR_WHITE,
     fontWeight: FontWeight.w700,
     fontSize: 16,
   );
 
-  var screenRouteName;
-  switch (text) {
-    case 'Home':
-      screenRouteName = '/';
-      break;
-    case 'Info':
-      screenRouteName = '/more-info';
-      break;
-    case 'Search':
-      screenRouteName = '/search';
-      break;
-    case 'Add':
-      screenRouteName = '/add';
-      break;
-  }
-
   return GButton(
-    onPressed: () {
-      Navigator.pushNamed(context, screenRouteName);
-    },
     gap: 10,
     iconActiveColor: COLOR_WHITE,
     iconColor: Colors.black,
