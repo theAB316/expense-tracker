@@ -67,31 +67,28 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
           textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
         ),
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(
+            settings: settings,
+            builder: (BuildContext context) {
+              switch (settings.name) {
+                case '/':
+                  return screens[0];
+                case '/more-info':
+                  return screens[1];
+                case '/search':
+                  return screens[2];
+                case '/add':
+                  return screens[3];
+                default:
+                  throw Exception('Invalid route: ${settings.name}');
+              }
+            },
+          );
+        },
         // home: MainScreen(),
         home: SafeArea(
           child: Scaffold(
-            body: Navigator(
-              onGenerateRoute: (RouteSettings settings) {
-                return MaterialPageRoute(
-                  settings: settings,
-                  builder: (BuildContext context) {
-                    switch (settings.name) {
-                      case '/':
-                        return screens[0];
-                      case '/more-info':
-                        return screens[1];
-                      case '/search':
-                        return screens[2];
-                      case '/add':
-                        return screens[3];
-                      default:
-                        throw Exception('Invalid route: ${settings.name}');
-                    }
-                  },
-                );
-              },
-            ),
-            // screens[selected_index],
             bottomNavigationBar: ScrollToHideWidget(
               controller: controller,
               child: BottomNavBarWidget(),
