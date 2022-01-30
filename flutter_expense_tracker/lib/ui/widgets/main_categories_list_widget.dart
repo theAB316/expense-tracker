@@ -4,9 +4,7 @@ import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/squircle_widget.dart';
 
 class MainCategoriesListWidget extends StatefulWidget {
-  ScrollController controller;
-  MainCategoriesListWidget({Key? key, required this.controller})
-      : super(key: key);
+  MainCategoriesListWidget({Key? key}) : super(key: key);
 
   @override
   _MainCategoriesListWidgetState createState() =>
@@ -19,7 +17,7 @@ class _MainCategoriesListWidgetState extends State<MainCategoriesListWidget> {
     ThemeData themeData = Theme.of(context);
     double screenWidth = window.physicalSize.width;
     return SingleChildScrollView(
-      controller: widget.controller,
+      controller: SCROLL_CONTROLLER,
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
 

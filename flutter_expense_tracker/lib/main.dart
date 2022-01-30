@@ -2,14 +2,9 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
-import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/bottom_nav_bar_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
-
-import 'ui/screens/add_screen.dart';
-import 'ui/screens/more_info_screen.dart';
-import 'ui/screens/search_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,34 +17,17 @@ class MyApp extends StatefulWidget {
 
 // underscore makes the MyAppState class private
 class _MyAppState extends State<MyApp> {
+  // Used in navigation of PageView
   PageController pageController = PageController();
-
-  // Will be initialized inside initState()
-  late List<Widget> screens;
-
-  // Controller is used to hide/show the bottom navbar, based on scroll direction
-  late ScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
-
-    scrollController = ScrollController();
-
-    // Init the screens here (since controller is not accessible outside)
-    screens = [
-      MainScreen(
-        controller: scrollController,
-      ),
-      MoreInfoScreen(),
-      SearchScreen(),
-      AddScreen(),
-    ];
   }
 
   @override
   void dispose() {
-    scrollController.dispose();
+    SCROLL_CONTROLLER.dispose();
     super.dispose();
   }
 
@@ -66,12 +44,11 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
           textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
         ),
-        // home: MainScreen(),
         home: SafeArea(
           child: Scaffold(
             body: PageView(
               controller: pageController,
-              children: screens,
+              children: SCREENS,
               onPageChanged: (page) {
                 setState(() {
                   SELECTED_INDEX = page;
@@ -80,7 +57,6 @@ class _MyAppState extends State<MyApp> {
               // physics: NeverScrollableScrollPhysics(),
             ),
             bottomNavigationBar: ScrollToHideWidget(
-              controller: scrollController,
               child: BottomNavBarWidget(
                 pageController: pageController,
               ),

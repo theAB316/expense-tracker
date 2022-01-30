@@ -47,7 +47,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           },
           tabs: [
             createGButtonWithGradient(LineIcons.home, "Home"),
-            createGButtonWithGradient(LineIcons.infoCircle, "Info"),
+            // createGButtonWithGradient(LineIcons.infoCircle, "Info"),
             createGButtonWithGradient(LineIcons.search, "Search"),
             createGButtonWithGradient(LineIcons.plus, "Add")
           ],

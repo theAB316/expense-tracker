@@ -8,11 +8,8 @@ import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
-  final ScrollController controller;
-
   const MainScreen({
     Key? key,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -70,8 +67,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           addVerticleSpace(10),
-          Expanded(
-              child: MainCategoriesListWidget(controller: widget.controller))
+          Expanded(child: MainCategoriesListWidget())
         ],
       ),
     );
