@@ -22,25 +22,24 @@ class MyApp extends StatefulWidget {
 
 // underscore makes the MyAppState class private
 class _MyAppState extends State<MyApp> {
-  // For screen change on tap of bottom navbar  items
-  int selected_index = 0;
+  PageController pageController = PageController();
 
   // Will be initialized inside initState()
-  late List screens;
+  late List<Widget> screens;
 
   // Controller is used to hide/show the bottom navbar, based on scroll direction
-  late ScrollController controller;
+  late ScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
 
-    controller = ScrollController();
+    scrollController = ScrollController();
 
     // Init the screens here (since controller is not accessible outside)
     screens = [
       MainScreen(
-        controller: controller,
+        controller: scrollController,
       ),
       MoreInfoScreen(),
       SearchScreen(),
@@ -50,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    controller.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -67,31 +66,24 @@ class _MyAppState extends State<MyApp> {
           scaffoldBackgroundColor: COLOR_LIGHT_BLUE_GREY,
           textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
         ),
-        onGenerateRoute: (RouteSettings settings) {
-          return MaterialPageRoute(
-            settings: settings,
-            builder: (BuildContext context) {
-              switch (settings.name) {
-                case '/':
-                  return screens[0];
-                case '/more-info':
-                  return screens[1];
-                case '/search':
-                  return screens[2];
-                case '/add':
-                  return screens[3];
-                default:
-                  throw Exception('Invalid route: ${settings.name}');
-              }
-            },
-          );
-        },
         // home: MainScreen(),
         home: SafeArea(
           child: Scaffold(
+            body: PageView(
+              controller: pageController,
+              children: screens,
+              onPageChanged: (page) {
+                setState(() {
+                  SELECTED_INDEX = page;
+                });
+              },
+              // physics: NeverScrollableScrollPhysics(),
+            ),
             bottomNavigationBar: ScrollToHideWidget(
-              controller: controller,
-              child: BottomNavBarWidget(),
+              controller: scrollController,
+              child: BottomNavBarWidget(
+                pageController: pageController,
+              ),
             ),
             extendBody: true,
           ),

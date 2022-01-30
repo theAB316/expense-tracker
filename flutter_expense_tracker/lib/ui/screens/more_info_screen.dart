@@ -5,6 +5,8 @@ class MoreInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("More Info Screen");
+    return Scaffold(
+      body: Text("More Info Screen"),
+    );
   }
 }
