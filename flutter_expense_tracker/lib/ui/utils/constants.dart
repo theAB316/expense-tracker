@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:intl/intl.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
@@ -141,4 +143,9 @@ Widget addHorizontalSpace(double width) {
   return SizedBox(
     width: width,
   );
+}
+
+String getCurrency() {
+  var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
+  return format.currencySymbol;
 }

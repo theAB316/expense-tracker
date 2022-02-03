@@ -69,14 +69,14 @@ class AddScreen extends StatelessWidget {
           decoration: InputDecoration(
             isDense: true,
             prefix: Text(
-              "\$",
+              getCurrency(),
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
             ),
             prefixStyle: TextStyle(
               color: COLOR_BLUE_GREY,
               fontWeight: FontWeight.w700,
-              fontSize: 18,
+              fontSize: 24,
             ),
             border: InputBorder.none,
           ),
