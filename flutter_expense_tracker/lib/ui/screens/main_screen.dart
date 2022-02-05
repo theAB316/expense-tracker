@@ -8,11 +8,8 @@ import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
-  final ScrollController controller;
-
   const MainScreen({
     Key? key,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -29,24 +26,24 @@ class _MainScreenState extends State<MainScreen> {
       height: size.height,
       child: Column(
         children: [
-          addVerticleSpace(PADDING_VALUE),
-          Padding(
-            padding: SYMMETRIC_PADDING_HORIZONTAL,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .spaceBetween, // to move both borderboxes to opposite ends
-              children: [
-                BorderBoxWidget(
-                    height: 50,
-                    width: 50,
-                    child: Icon(Icons.menu, color: COLOR_GREY)),
-                BorderBoxWidget(
-                    height: 50,
-                    width: 50,
-                    child: Icon(Icons.settings, color: COLOR_GREY))
-              ],
-            ),
-          ),
+          // addVerticleSpace(PADDING_VALUE),
+          // Padding(
+          //   padding: SYMMETRIC_PADDING_HORIZONTAL,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment
+          //         .spaceBetween, // to move both borderboxes to opposite ends
+          //     children: [
+          //       BorderBoxWidget(
+          //           height: 50,
+          //           width: 50,
+          //           child: Icon(Icons.menu, color: COLOR_GREY)),
+          //       BorderBoxWidget(
+          //           height: 50,
+          //           width: 50,
+          //           child: Icon(Icons.settings, color: COLOR_GREY))
+          //     ],
+          //   ),
+          // ),
           addVerticleSpace(PADDING_VALUE),
           Padding(
               padding: SYMMETRIC_PADDING_HORIZONTAL,
@@ -59,19 +56,18 @@ class _MainScreenState extends State<MainScreen> {
                   .spaceBetween, // to move both borderboxes to opposite ends
               children: [
                 Text(
-                  "Transactions",
+                  "Categories",
                   style: themeData.textTheme.headline5,
                 ),
                 Text(
-                  "View All",
+                  "All Transactions",
                   style: themeData.textTheme.headline5,
                 ),
               ],
             ),
           ),
           addVerticleSpace(10),
-          Expanded(
-              child: MainCategoriesListWidget(controller: widget.controller))
+          Expanded(child: MainCategoriesListWidget())
         ],
       ),
     );

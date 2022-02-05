@@ -1,9 +1,30 @@
 import 'dart:collection';
 
+import 'package:intl/intl.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
+import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
+
+////////////// IMPORTANT CONSTANTS //////////////////////////
+
+// Init the screens
+final List<Widget> SCREENS = [
+  MainScreen(),
+  // MoreInfoScreen(),
+  SearchScreen(),
+  AddScreen(),
+];
+
+// Controller is used to hide/show the bottom navbar, based on scroll direction
+ScrollController SCROLL_CONTROLLER = ScrollController();
 
 // For screen change on tap of bottom navbar items
 int SELECTED_INDEX = 0;
+
+/////////////////////////////////////////////////////////////
 
 // To create category list in MainScreen
 class Category {
@@ -122,4 +143,9 @@ Widget addHorizontalSpace(double width) {
   return SizedBox(
     width: width,
   );
+}
+
+String getCurrency() {
+  var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
+  return format.currencySymbol;
 }
