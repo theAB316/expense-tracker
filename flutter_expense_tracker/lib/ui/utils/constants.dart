@@ -24,6 +24,8 @@ ScrollController SCROLL_CONTROLLER = ScrollController();
 // For screen change on tap of bottom navbar items
 int SELECTED_INDEX = 0;
 
+int MAIN_SCREEN_SELECTED_INDEX = 0;
+
 /////////////////////////////////////////////////////////////
 
 // To create category list in MainScreen
@@ -65,6 +67,9 @@ const EdgeInsets SYMMETRIC_PADDING_HORIZONTAL =
 
 const EdgeInsets SYMMETRIC_PADDING_ALL =
     EdgeInsets.symmetric(horizontal: 25, vertical: 10);
+
+const TextStyle TEXT_MEDIUM_BLACK = TextStyle(
+    color: COLOR_BLUE_GREY, fontWeight: FontWeight.w700, fontSize: 16);
 
 const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);
 const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);
