@@ -32,7 +32,7 @@ class _MainExpensesWidgetState extends State<MainExpensesWidget> {
             ),
             addVerticleSpace(PADDING_VALUE),
             Text(
-              RUPPEE_SYMBOL + " " + totalExpenses.toString(),
+              getCurrency() + " " + totalExpenses.toString(),
               style: themeData.textTheme.headline1,
             ),
           ],

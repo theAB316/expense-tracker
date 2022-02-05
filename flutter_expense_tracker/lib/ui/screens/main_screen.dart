@@ -26,24 +26,24 @@ class _MainScreenState extends State<MainScreen> {
       height: size.height,
       child: Column(
         children: [
-          addVerticleSpace(PADDING_VALUE),
-          Padding(
-            padding: SYMMETRIC_PADDING_HORIZONTAL,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment
-                  .spaceBetween, // to move both borderboxes to opposite ends
-              children: [
-                BorderBoxWidget(
-                    height: 50,
-                    width: 50,
-                    child: Icon(Icons.menu, color: COLOR_GREY)),
-                BorderBoxWidget(
-                    height: 50,
-                    width: 50,
-                    child: Icon(Icons.settings, color: COLOR_GREY))
-              ],
-            ),
-          ),
+          // addVerticleSpace(PADDING_VALUE),
+          // Padding(
+          //   padding: SYMMETRIC_PADDING_HORIZONTAL,
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment
+          //         .spaceBetween, // to move both borderboxes to opposite ends
+          //     children: [
+          //       BorderBoxWidget(
+          //           height: 50,
+          //           width: 50,
+          //           child: Icon(Icons.menu, color: COLOR_GREY)),
+          //       BorderBoxWidget(
+          //           height: 50,
+          //           width: 50,
+          //           child: Icon(Icons.settings, color: COLOR_GREY))
+          //     ],
+          //   ),
+          // ),
           addVerticleSpace(PADDING_VALUE),
           Padding(
               padding: SYMMETRIC_PADDING_HORIZONTAL,
@@ -56,11 +56,11 @@ class _MainScreenState extends State<MainScreen> {
                   .spaceBetween, // to move both borderboxes to opposite ends
               children: [
                 Text(
-                  "Transactions",
+                  "Categories",
                   style: themeData.textTheme.headline5,
                 ),
                 Text(
-                  "View All",
+                  "All Transactions",
                   style: themeData.textTheme.headline5,
                 ),
               ],
