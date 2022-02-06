@@ -19,6 +19,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  listCallback() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData themeData = Theme.of(context);
@@ -39,9 +43,14 @@ class _MainScreenState extends State<MainScreen> {
               mainAxisAlignment: MainAxisAlignment
                   .spaceBetween, // to move both borderboxes to opposite ends
               children: [
-                MainScreenButton(displayText: "Categories", whichButton: 0),
                 MainScreenButton(
-                    displayText: "All Transactions", whichButton: 1),
+                    displayText: "Categories",
+                    whichButton: 0,
+                    callback: listCallback),
+                MainScreenButton(
+                    displayText: "All Transactions",
+                    whichButton: 1,
+                    callback: listCallback),
               ],
             ),
           ),

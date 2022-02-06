@@ -1,26 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 
-class MainScreenButton extends StatelessWidget {
-  String displayText;
-  int whichButton;
+class MainScreenButton extends StatefulWidget {
+  final String displayText;
+  final int whichButton;
+  final Function callback;
 
-  MainScreenButton({
+  const MainScreenButton({
     Key? key,
     required this.displayText,
     required this.whichButton,
+    required this.callback,
   }) : super(key: key);
 
+  @override
+  State<MainScreenButton> createState() => _MainScreenButtonState();
+}
+
+class _MainScreenButtonState extends State<MainScreenButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        setState() {
-          MAIN_SCREEN_SELECTED_INDEX = whichButton;
-        }
+        MAIN_SCREEN_SELECTED_INDEX = widget.whichButton;
+        widget.callback();
       },
       child: Text(
-        displayText,
+        widget.displayText,
         style: TEXT_MEDIUM_BLACK,
       ),
       style: ElevatedButton.styleFrom(
