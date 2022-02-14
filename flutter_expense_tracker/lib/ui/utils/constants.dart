@@ -24,6 +24,8 @@ ScrollController SCROLL_CONTROLLER = ScrollController();
 // For screen change on tap of bottom navbar items
 int SELECTED_INDEX = 0;
 
+int MAIN_SCREEN_SELECTED_INDEX = 0;
+
 /////////////////////////////////////////////////////////////
 
 // To create category list in MainScreen
@@ -44,7 +46,7 @@ final LinkedHashMap<String, Category> CATEGORIES_MAP = LinkedHashMap.from({
   "Food": Category("Food & Essentials", Icons.fastfood_sharp, COLOR_YELLOW),
   "Shopping": Category("Shopping", Icons.shopping_cart_sharp, COLOR_PURPLE),
   "Entertainment": Category("Entertainment", Icons.movie_sharp, COLOR_RED),
-  "Blah 1": Category("Blah 1", Icons.circle, COLOR_GREEN),
+  "Others": Category("Others", Icons.circle, COLOR_GREEN),
   "Blah 2": Category("Blah 2", Icons.circle, COLOR_YELLOW),
 });
 
@@ -65,6 +67,9 @@ const EdgeInsets SYMMETRIC_PADDING_HORIZONTAL =
 
 const EdgeInsets SYMMETRIC_PADDING_ALL =
     EdgeInsets.symmetric(horizontal: 25, vertical: 10);
+
+const TextStyle TEXT_MEDIUM_BLACK = TextStyle(
+    color: COLOR_BLUE_GREY, fontWeight: FontWeight.w700, fontSize: 16);
 
 const COLOR_BLACK = Color.fromRGBO(48, 47, 48, 1.0);
 const COLOR_GREY = Color.fromRGBO(141, 141, 141, 1.0);

@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/data/dummy_data.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/squircle_widget.dart';
 
@@ -47,8 +48,17 @@ class _MainCategoriesListWidgetState extends State<MainCategoriesListWidget> {
                                 shape: BoxShape.circle),
                           ),
                           addHorizontalSpace(PADDING_VALUE),
-                          Text(entry.value.name,
-                              style: themeData.textTheme.headline5)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(entry.value.name,
+                                  style: themeData.textTheme.headline5),
+                              Text(
+                                "${getCurrency()} ${totalExpensesCategories[entry.key]}",
+                                style: themeData.textTheme.headline5,
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ),
