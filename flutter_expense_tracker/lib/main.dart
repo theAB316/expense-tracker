@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 
 // underscore makes the MyAppState class private
 class _MyAppState extends State<MyApp> {
-  // Used in navigation of PageView
+  // Used in navigation of PageView, detects swipes
   PageController pageController = PageController();
 
   @override

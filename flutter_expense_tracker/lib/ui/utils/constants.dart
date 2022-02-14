@@ -46,7 +46,7 @@ final LinkedHashMap<String, Category> CATEGORIES_MAP = LinkedHashMap.from({
   "Food": Category("Food & Essentials", Icons.fastfood_sharp, COLOR_YELLOW),
   "Shopping": Category("Shopping", Icons.shopping_cart_sharp, COLOR_PURPLE),
   "Entertainment": Category("Entertainment", Icons.movie_sharp, COLOR_RED),
-  "Blah 1": Category("Blah 1", Icons.circle, COLOR_GREEN),
+  "Others": Category("Others", Icons.circle, COLOR_GREEN),
   "Blah 2": Category("Blah 2", Icons.circle, COLOR_YELLOW),
 });
 
