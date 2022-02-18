@@ -7,6 +7,7 @@ import 'package:flutter_expense_tracker/ui/widgets/main_categories_list_widget.d
 import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_screen_button_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_transactions_list_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/scan_sms_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -55,6 +56,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           addVerticleSpace(10),
+          ScanSms(),
           Expanded(
               child: (MAIN_SCREEN_SELECTED_INDEX == 0)
                   ? MainCategoriesListWidget()

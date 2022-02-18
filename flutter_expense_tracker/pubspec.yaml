@@ -39,6 +39,8 @@ dependencies:
   line_icons: ^2.0.1
   badges: ^2.0.2
   intl: ^0.17.0
+  flutter_sms_inbox: ^1.0.1
+  permission_handler: ^9.1.0
 
 dev_dependencies:
   flutter_test:
