@@ -17,23 +17,20 @@ class _ScanSmsState extends State<ScanSms> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () async {
-        var permission = await Permission.sms.status;
-        if (permission.isGranted) {
-          final messages = await _query.querySms(
-            kinds: [SmsQueryKind.inbox, SmsQueryKind.sent],
-            // address: '+254712345789',
-            count: 10,
-          );
-          debugPrint('sms inbox messages: ${messages.length}');
-
-          setState(() => _messages = messages);
-        } else {
-          debugPrint('no permission yet');
-          await Permission.sms.request();
-        }
-      },
-      child: const Icon(Icons.refresh),
+      onPressed: getAllSms,
+      child: Row(
+        children: [
+          const Icon(
+            Icons.refresh,
+            color: COLOR_BLUE_GREY,
+          ),
+          addHorizontalSpace(10),
+          Text(
+            "Refresh",
+            style: TEXT_MEDIUM_BLACK,
+          )
+        ],
+      ),
       style: ElevatedButton.styleFrom(
         primary: Colors.transparent,
         elevation: 0,

@@ -7,6 +7,8 @@ import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 
 ////////////// IMPORTANT CONSTANTS //////////////////////////
 
@@ -153,4 +155,22 @@ Widget addHorizontalSpace(double width) {
 String getCurrency() {
   var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
   return format.currencySymbol;
+}
+
+Future<List<SmsMessage>> getAllSms() async {
+  SmsQuery query = SmsQuery();
+  var permission = await Permission.sms.request();
+
+  if (permission.isGranted) {
+    final List<SmsMessage> messages = await query.querySms(
+      kinds: [SmsQueryKind.inbox],
+      count: 100,
+    );
+    debugPrint('Sms inbox messages: ${messages.length}');
+
+    return messages;
+  } else {
+    debugPrint('Please refresh and provide permissions!');
+    return List.empty();
+  }
 }

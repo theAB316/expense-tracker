@@ -33,11 +33,18 @@ class _MainScreenState extends State<MainScreen> {
       height: size.height,
       child: Column(
         children: [
-          addVerticleSpace(PADDING_VALUE),
+          addVerticleSpace(10),
+          Padding(
+            padding: SYMMETRIC_PADDING_HORIZONTAL,
+            child: Row(
+              children: [ScanSms()],
+            ),
+          ),
+          addVerticleSpace(10),
           Padding(
               padding: SYMMETRIC_PADDING_HORIZONTAL,
               child: MainExpensesWidget()),
-          addVerticleSpace(PADDING_VALUE + 10),
+          addVerticleSpace(PADDING_VALUE),
           Padding(
             padding: SYMMETRIC_PADDING_HORIZONTAL,
             child: Row(
@@ -55,8 +62,7 @@ class _MainScreenState extends State<MainScreen> {
               ],
             ),
           ),
-          addVerticleSpace(10),
-          ScanSms(),
+          // addVerticleSpace(10),
           Expanded(
               child: (MAIN_SCREEN_SELECTED_INDEX == 0)
                   ? MainCategoriesListWidget()
