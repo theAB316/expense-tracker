@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/widgets/bottom_nav_bar_widget.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/border_box_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/date_filter.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_categories_list_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_screen_button_widget.dart';
@@ -37,7 +38,11 @@ class _MainScreenState extends State<MainScreen> {
           Padding(
             padding: SYMMETRIC_PADDING_HORIZONTAL,
             child: Row(
-              children: [ScanSms()],
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ScanSms(),
+                DateFilter(),
+              ],
             ),
           ),
           addVerticleSpace(10),

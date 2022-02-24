@@ -28,6 +28,9 @@ int SELECTED_INDEX = 0;
 
 int MAIN_SCREEN_SELECTED_INDEX = 0;
 
+// 1 => 1Y, 2 => 1M, 3 => 1D. By default messages upto 1D is selected
+int DATE_FILTER_RANGE_SELECTED = 3;
+
 /////////////////////////////////////////////////////////////
 
 // To create category list in MainScreen
@@ -164,13 +167,47 @@ Future<List<SmsMessage>> getAllSms() async {
   if (permission.isGranted) {
     final List<SmsMessage> messages = await query.querySms(
       kinds: [SmsQueryKind.inbox],
-      count: 100,
+      count: 20,
     );
     debugPrint('Sms inbox messages: ${messages.length}');
+
+    for (var i = 0; i < messages.length; i++) {
+      if (getAmount(messages[i].body) != "") {
+        debugPrint(getAmount(messages[i].body));
+      }
+    }
 
     return messages;
   } else {
     debugPrint('Please refresh and provide permissions!');
     return List.empty();
   }
+}
+
+// diff regex for scanning SMS
+String getAmount(String? sms) {
+  if (sms == null) return "";
+  RegExp reg = RegExp(
+      r'(?i)(?:(?:RS|INR|MRP)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)');
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
+}
+
+String getMerchantName(String? sms) {
+  if (sms == null) return "";
+  RegExp reg =
+      RegExp(r'(?i)(?:\sat\s|in\*)([A-Za-z0-9]*\s?-?\s?[A-Za-z0-9]*\s?-?\.?)');
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
+}
+
+String getCardType(String? sms) {
+  if (sms == null) return "";
+  RegExp reg = RegExp(
+      r'(?i)(?:\smade on|ur|made a\s|in\*)([A-Za-z]*\s?-?\s[A-Za-z]*\s?-?\s[A-Za-z]*\s?-?)');
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
 }

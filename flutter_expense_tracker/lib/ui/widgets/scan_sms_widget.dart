@@ -16,7 +16,7 @@ class _ScanSmsState extends State<ScanSms> {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: getAllSms,
       child: Row(
         children: [
@@ -31,7 +31,7 @@ class _ScanSmsState extends State<ScanSms> {
           )
         ],
       ),
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         primary: Colors.transparent,
         elevation: 0,
       ),
