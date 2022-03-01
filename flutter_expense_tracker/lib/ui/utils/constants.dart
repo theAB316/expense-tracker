@@ -7,6 +7,8 @@ import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 
 ////////////// IMPORTANT CONSTANTS //////////////////////////
 
@@ -25,6 +27,9 @@ ScrollController SCROLL_CONTROLLER = ScrollController();
 int SELECTED_INDEX = 0;
 
 int MAIN_SCREEN_SELECTED_INDEX = 0;
+
+// 1 => 1Y, 2 => 1M, 3 => 1D. By default messages upto 1D is selected
+int DATE_FILTER_RANGE_SELECTED = 3;
 
 /////////////////////////////////////////////////////////////
 
@@ -153,4 +158,86 @@ Widget addHorizontalSpace(double width) {
 String getCurrency() {
   var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
   return format.currencySymbol;
+}
+
+Future<List<SmsMessage>> getAllSms() async {
+  SmsQuery query = SmsQuery();
+  var permission = await Permission.sms.request();
+
+  if (permission.isGranted) {
+    final List<SmsMessage> messages = await query.querySms(
+      kinds: [SmsQueryKind.inbox],
+      count: 20,
+    );
+    debugPrint('Sms inbox messages: ${messages.length}');
+
+    for (var i = 0; i < messages.length; i++) {
+      HashMap txnDetailsMap = getTransactionDetails(messages[i].body);
+      if (txnDetailsMap["validTransaction"]) {
+        debugPrint(
+            "${txnDetailsMap["amount"]}, ${txnDetailsMap["merchant"]}, ${txnDetailsMap["cardType"]}");
+      }
+    }
+
+    return messages;
+  } else {
+    debugPrint('Please refresh and provide permissions!');
+    return List.empty();
+  }
+}
+
+HashMap getTransactionDetails(String? sms) {
+  /**
+   * amount
+   * merchant 
+   * txnType - debit/credit
+   * validTransaction - valid txn or spam
+  */
+  HashMap hashMap = HashMap();
+
+  hashMap["amount"] = getAmount(sms);
+  hashMap["merchant"] = getMerchantName(sms);
+  hashMap["txnType"] = getTransactionType(sms);
+
+  // if any of the above is not present, it is not a valid txn (might be spam)
+  if (hashMap["amount"] != "" &&
+      hashMap["merchant"] != "" &&
+      hashMap["txnType"] != "") {
+    hashMap["validTransaction"] = true;
+  } else {
+    hashMap["validTransaction"] = false;
+  }
+
+  return hashMap;
+}
+
+// diff regex for scanning SMS
+String getAmount(String? sms) {
+  if (sms == null) return "";
+  RegExp reg = RegExp(
+      r'(?:(?:RS|INR|MRP|RUPEES|)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)',
+      caseSensitive: false);
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
+}
+
+String getMerchantName(String? sms) {
+  if (sms == null) return "";
+  RegExp reg = RegExp(
+      r'(?:\sat\s|in\*)([A-Za-z0-9]*\s?-?\s?[A-Za-z0-9]*\s?-?\.?)',
+      caseSensitive: false);
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
+}
+
+String getTransactionType(String? sms) {
+  if (sms == null) return "";
+  RegExp reg = RegExp(
+      r'(?:\smade on|ur|made a\s|in\*)([A-Za-z]*\s?-?\s[A-Za-z]*\s?-?\s[A-Za-z]*\s?-?)',
+      caseSensitive: false);
+
+  final matchedString = reg.firstMatch(sms)?.group(0);
+  return matchedString ?? "";
 }

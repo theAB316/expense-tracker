@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/ui/widgets/bottom_nav_bar_widget.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/border_box_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/date_filter.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_categories_list_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_expenses_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_screen_button_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/main_transactions_list_widget.dart';
+import 'package:flutter_expense_tracker/ui/widgets/scan_sms_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -32,11 +34,22 @@ class _MainScreenState extends State<MainScreen> {
       height: size.height,
       child: Column(
         children: [
-          addVerticleSpace(PADDING_VALUE),
+          addVerticleSpace(10),
+          Padding(
+            padding: SYMMETRIC_PADDING_HORIZONTAL,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ScanSms(),
+                DateFilter(),
+              ],
+            ),
+          ),
+          addVerticleSpace(10),
           Padding(
               padding: SYMMETRIC_PADDING_HORIZONTAL,
               child: MainExpensesWidget()),
-          addVerticleSpace(PADDING_VALUE + 10),
+          addVerticleSpace(PADDING_VALUE),
           Padding(
             padding: SYMMETRIC_PADDING_HORIZONTAL,
             child: Row(
@@ -54,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
               ],
             ),
           ),
-          addVerticleSpace(10),
+          // addVerticleSpace(10),
           Expanded(
               child: (MAIN_SCREEN_SELECTED_INDEX == 0)
                   ? MainCategoriesListWidget()

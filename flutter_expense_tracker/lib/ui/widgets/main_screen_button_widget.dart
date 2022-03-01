@@ -20,7 +20,7 @@ class MainScreenButton extends StatefulWidget {
 class _MainScreenButtonState extends State<MainScreenButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: () {
         MAIN_SCREEN_SELECTED_INDEX = widget.whichButton;
         widget.callback();
@@ -29,7 +29,7 @@ class _MainScreenButtonState extends State<MainScreenButton> {
         widget.displayText,
         style: TEXT_MEDIUM_BLACK,
       ),
-      style: ElevatedButton.styleFrom(
+      style: TextButton.styleFrom(
         primary: Colors.transparent,
         elevation: 0,
       ),
