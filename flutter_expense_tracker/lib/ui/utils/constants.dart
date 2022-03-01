@@ -172,8 +172,10 @@ Future<List<SmsMessage>> getAllSms() async {
     debugPrint('Sms inbox messages: ${messages.length}');
 
     for (var i = 0; i < messages.length; i++) {
-      if (getAmount(messages[i].body) != "") {
-        debugPrint(getAmount(messages[i].body));
+      HashMap txnDetailsMap = getTransactionDetails(messages[i].body);
+      if (txnDetailsMap["validTransaction"]) {
+        debugPrint(
+            "${txnDetailsMap["amount"]}, ${txnDetailsMap["merchant"]}, ${txnDetailsMap["cardType"]}");
       }
     }
 
@@ -184,11 +186,37 @@ Future<List<SmsMessage>> getAllSms() async {
   }
 }
 
+HashMap getTransactionDetails(String? sms) {
+  /**
+   * amount
+   * merchant 
+   * txnType - debit/credit
+   * validTransaction - valid txn or spam
+  */
+  HashMap hashMap = HashMap();
+
+  hashMap["amount"] = getAmount(sms);
+  hashMap["merchant"] = getMerchantName(sms);
+  hashMap["txnType"] = getTransactionType(sms);
+
+  // if any of the above is not present, it is not a valid txn (might be spam)
+  if (hashMap["amount"] != "" &&
+      hashMap["merchant"] != "" &&
+      hashMap["txnType"] != "") {
+    hashMap["validTransaction"] = true;
+  } else {
+    hashMap["validTransaction"] = false;
+  }
+
+  return hashMap;
+}
+
 // diff regex for scanning SMS
 String getAmount(String? sms) {
   if (sms == null) return "";
   RegExp reg = RegExp(
-      r'(?i)(?:(?:RS|INR|MRP)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)');
+      r'(?:(?:RS|INR|MRP|RUPEES|)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)',
+      caseSensitive: false);
 
   final matchedString = reg.firstMatch(sms)?.group(0);
   return matchedString ?? "";
@@ -196,17 +224,19 @@ String getAmount(String? sms) {
 
 String getMerchantName(String? sms) {
   if (sms == null) return "";
-  RegExp reg =
-      RegExp(r'(?i)(?:\sat\s|in\*)([A-Za-z0-9]*\s?-?\s?[A-Za-z0-9]*\s?-?\.?)');
+  RegExp reg = RegExp(
+      r'(?:\sat\s|in\*)([A-Za-z0-9]*\s?-?\s?[A-Za-z0-9]*\s?-?\.?)',
+      caseSensitive: false);
 
   final matchedString = reg.firstMatch(sms)?.group(0);
   return matchedString ?? "";
 }
 
-String getCardType(String? sms) {
+String getTransactionType(String? sms) {
   if (sms == null) return "";
   RegExp reg = RegExp(
-      r'(?i)(?:\smade on|ur|made a\s|in\*)([A-Za-z]*\s?-?\s[A-Za-z]*\s?-?\s[A-Za-z]*\s?-?)');
+      r'(?:\smade on|ur|made a\s|in\*)([A-Za-z]*\s?-?\s[A-Za-z]*\s?-?\s[A-Za-z]*\s?-?)',
+      caseSensitive: false);
 
   final matchedString = reg.firstMatch(sms)?.group(0);
   return matchedString ?? "";
