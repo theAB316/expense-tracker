@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:flutter_expense_tracker/data/database.dart';
+import 'package:flutter_expense_tracker/data/dummy_data.dart';
 import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -160,33 +162,52 @@ String getCurrency() {
   return format.currencySymbol;
 }
 
-Future<List<SmsMessage>> getAllSms() async {
-  SmsQuery query = SmsQuery();
-  var permission = await Permission.sms.request();
+// Future<List<SmsMessage>> getAllSms() async {
+//   SmsQuery query = SmsQuery();
+//   var permission = await Permission.sms.request();
 
-  if (permission.isGranted) {
-    final List<SmsMessage> messages = await query.querySms(
-      kinds: [SmsQueryKind.inbox],
-      count: 20,
-    );
-    debugPrint('Sms inbox messages: ${messages.length}');
+//   if (permission.isGranted) {
+//     final List<SmsMessage> messages = await query.querySms(
+//       kinds: [SmsQueryKind.inbox],
+//       count: 20,
+//     );
+//     debugPrint('Sms inbox messages: ${messages.length}');
 
-    for (var i = 0; i < messages.length; i++) {
-      HashMap txnDetailsMap = getTransactionDetails(messages[i].body);
-      if (txnDetailsMap["validTransaction"]) {
-        debugPrint(
-            "${txnDetailsMap["amount"]}, ${txnDetailsMap["merchant"]}, ${txnDetailsMap["cardType"]}");
-      }
+//     for (var i = 0; i < messages.length; i++) {
+//       HashMap txnDetailsMap = getTransactionDetails(messages[i].body);
+//       if (txnDetailsMap["validTransaction"]) {
+//         debugPrint(
+//             "${txnDetailsMap["amount"]}, ${txnDetailsMap["merchant"]}, ${txnDetailsMap["cardType"]}");
+//       }
+//     }
+
+//     return messages;
+//   } else {
+//     debugPrint('Please refresh and provide permissions!');
+//     return List.empty();
+//   }
+// }
+
+void getAllSms() {
+  for (var i = 0; i < dummySmsList.length; i++) {
+    if (dummySmsList[i] == "") continue;
+
+    HashMap txnDetailsMap = getTransactionDetails(dummySmsList[i]);
+    if (txnDetailsMap["validTransaction"]) {
+      debugPrint("${txnDetailsMap["amount"]}, ${txnDetailsMap["txnType"]}");
+
+      // add to database
+      addTransaction(
+          txnDetailsMap["amount"],
+          txnDetailsMap["txnType"] == 0, // 0 - debit, 1 - credit
+          DateTime.now(),
+          "DummyBank",
+          "DummyCategory");
     }
-
-    return messages;
-  } else {
-    debugPrint('Please refresh and provide permissions!');
-    return List.empty();
   }
 }
 
-HashMap getTransactionDetails(String? sms) {
+HashMap getTransactionDetails(String sms) {
   /**
    * amount
    * merchant 
@@ -196,34 +217,33 @@ HashMap getTransactionDetails(String? sms) {
   HashMap hashMap = HashMap();
 
   hashMap["amount"] = getAmount(sms);
-  hashMap["merchant"] = getMerchantName(sms);
+  //hashMap["merchant"] = getMerchantName(sms);
   hashMap["txnType"] = getTransactionType(sms);
 
   // if any of the above is not present, it is not a valid txn (might be spam)
-  if (hashMap["amount"] != "" &&
-      hashMap["merchant"] != "" &&
-      hashMap["txnType"] != "") {
-    hashMap["validTransaction"] = true;
-  } else {
+  if (hashMap["amount"] == -1 && hashMap["txnType"] == 2) {
     hashMap["validTransaction"] = false;
+  } else {
+    hashMap["validTransaction"] = true;
   }
 
   return hashMap;
 }
 
 // diff regex for scanning SMS
-String getAmount(String? sms) {
-  if (sms == null) return "";
-  RegExp reg = RegExp(
-      r'(?:(?:RS|INR|MRP|RUPEES|)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)',
+double getAmount(String sms) {
+  RegExp regexExtractAmount = RegExp(
+      r'(?:(?:RS|INR|MRP)\.?\s?)(\d+(:?\,\d+)?(\,\d+)?(\.\d{1,2})?)',
       caseSensitive: false);
 
-  final matchedString = reg.firstMatch(sms)?.group(0);
-  return matchedString ?? "";
+  final matchedExp = regexExtractAmount.firstMatch(sms);
+
+  if (matchedExp == null || matchedExp.group(1) == null) return -1;
+
+  return double.parse(matchedExp.group(1) as String);
 }
 
-String getMerchantName(String? sms) {
-  if (sms == null) return "";
+String getMerchantName(String sms) {
   RegExp reg = RegExp(
       r'(?:\sat\s|in\*)([A-Za-z0-9]*\s?-?\s?[A-Za-z0-9]*\s?-?\.?)',
       caseSensitive: false);
@@ -232,12 +252,30 @@ String getMerchantName(String? sms) {
   return matchedString ?? "";
 }
 
-String getTransactionType(String? sms) {
-  if (sms == null) return "";
-  RegExp reg = RegExp(
-      r'(?:\smade on|ur|made a\s|in\*)([A-Za-z]*\s?-?\s[A-Za-z]*\s?-?\s[A-Za-z]*\s?-?)',
-      caseSensitive: false);
+/// Return 0 if debit txn
+/// Return 1 if credit txn
+/// Return 2 if no txn string was found
+int getTransactionType(String sms) {
+  sms = sms.toLowerCase();
 
-  final matchedString = reg.firstMatch(sms)?.group(0);
-  return matchedString ?? "";
+  // Diff debit txn checks (add more)
+  final debitCheckStrings = [
+    "spent on",
+    "debited for",
+    "debited to your",
+    "debited from"
+  ];
+
+  // Diff credit txns (add more)
+  final creditCheckStrings = ["credited to"];
+
+  for (int i = 0; i < debitCheckStrings.length; i++) {
+    if (sms.contains(debitCheckStrings[i])) return 0;
+  }
+
+  for (int i = 0; i < creditCheckStrings.length; i++) {
+    if (sms.contains(creditCheckStrings[i])) return 1;
+  }
+
+  return 2;
 }
