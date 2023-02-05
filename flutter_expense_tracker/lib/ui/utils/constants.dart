@@ -9,6 +9,7 @@ import 'package:flutter_expense_tracker/ui/screens/add_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/main_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/more_info_screen.dart';
 import 'package:flutter_expense_tracker/ui/screens/search_screen.dart';
+import 'package:intl/number_symbols.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 
@@ -57,6 +58,7 @@ final LinkedHashMap<String, Category> CATEGORIES_MAP = LinkedHashMap.from({
   "Blah 2": Category("Blah 2", Icons.circle, COLOR_YELLOW),
 });
 
+// Below list of colours creates the gradient for TotalExpenses widget
 final MAIN_EXPENSES_WIDGET_COLOURS = [
   Colors.blue,
   Colors.purpleAccent.shade100,
@@ -145,12 +147,14 @@ const TextTheme TEXT_THEME_SMALL = TextTheme(
     subtitle2: TextStyle(
         color: COLOR_GREY, fontSize: 10, fontWeight: FontWeight.w400));
 
+// Below widget can be used to add verticle space in Column for example
 Widget addVerticleSpace(double height) {
   return SizedBox(
     height: height,
   );
 }
 
+// Below widget can be used to add horizontal space in Row for example
 Widget addHorizontalSpace(double width) {
   return SizedBox(
     width: width,
@@ -158,7 +162,10 @@ Widget addHorizontalSpace(double width) {
 }
 
 String getCurrency() {
-  var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
+  // Hard-coding for Ruppee for the timebeingstore
+  var format = NumberFormat.simpleCurrency(locale: "en_IN");
+
+  // var format = NumberFormat.simpleCurrency(locale: Platform.localeName);
   return format.currencySymbol;
 }
 
@@ -240,7 +247,10 @@ double getAmount(String sms) {
 
   if (matchedExp == null || matchedExp.group(1) == null) return -1;
 
-  return double.parse(matchedExp.group(1) as String);
+  // Remove any commas in the amount. Use NumberFormat.parse() if international
+  final amountStr = (matchedExp.group(1) as String).replaceAll(',', '');
+
+  return double.parse(amountStr);
 }
 
 String getMerchantName(String sms) {
@@ -267,7 +277,7 @@ int getTransactionType(String sms) {
   ];
 
   // Diff credit txns (add more)
-  final creditCheckStrings = ["credited to"];
+  final creditCheckStrings = ["credited to", "credit for"];
 
   for (int i = 0; i < debitCheckStrings.length; i++) {
     if (sms.contains(debitCheckStrings[i])) return 0;
@@ -277,5 +287,6 @@ int getTransactionType(String sms) {
     if (sms.contains(creditCheckStrings[i])) return 1;
   }
 
+  // unknown txn type or incorrect sms
   return 2;
 }

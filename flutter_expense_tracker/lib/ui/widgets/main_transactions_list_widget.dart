@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expense_tracker/data/dummy_data.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/squircle_widget.dart';
+import 'package:flutter_expense_tracker/data/database.dart';
 
 class MainTransactionsList extends StatefulWidget {
   const MainTransactionsList({Key? key}) : super(key: key);
@@ -21,7 +22,8 @@ class _MainTransactionsListState extends State<MainTransactionsList> {
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       child: Column(
-        children: dummyAllTransactionsList
+        // children: dummyAllTransactionsList
+        children: getAllTransactions()
             .map((entry) => Padding(
                   padding: SYMMETRIC_PADDING_ALL,
                   child: Container(
@@ -30,7 +32,8 @@ class _MainTransactionsListState extends State<MainTransactionsList> {
                       child: Row(
                         children: [
                           addHorizontalSpace(PADDING_VALUE),
-                          Text(entry, style: TEXT_MEDIUM_BLACK)
+                          Text(entry.amount.toString(),
+                              style: TEXT_MEDIUM_BLACK)
                         ],
                       ),
                     ),

@@ -9,11 +9,10 @@ const dummyAllTransactionsList = [
 ];
 
 const totalExpensesCategories = {
-  "Food": 2000,
-  "Shopping": 4000,
-  "Entertainment": 1000,
-  "Others": 1000,
-  "Blah 2": 0,
+  "Food": 0,
+  "Shopping": 0,
+  "Entertainment": 0,
+  "Others": 0,
 };
 
 const dummySmsList = [
