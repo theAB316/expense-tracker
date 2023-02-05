@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_expense_tracker/data/database.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 
 class DateFilter extends StatefulWidget {
@@ -46,6 +47,7 @@ Widget basicButton(String text, int value) {
   return InkWell(
     onTap: () {
       DATE_FILTER_RANGE_SELECTED = value;
+      printLengthOfBox();
     },
     child: Text(
       text,

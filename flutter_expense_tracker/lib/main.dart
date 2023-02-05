@@ -2,11 +2,14 @@
 
 import 'dart:ui';
 import 'package:flutter/material.dart'; // has built-in widgets based on material theme
+import 'package:flutter_expense_tracker/data/database.dart';
 import 'package:flutter_expense_tracker/ui/utils/constants.dart';
 import 'package:flutter_expense_tracker/ui/widgets/bottom_nav_bar_widget.dart';
 import 'package:flutter_expense_tracker/ui/widgets/scroll_to_hide_widget.dart';
 
 void main() {
+  // We need to create/open a Hive box (aka database) before launching the app
+  initiateHiveDatabase();
   runApp(MyApp());
 }
 
@@ -28,6 +31,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     SCROLL_CONTROLLER.dispose();
+
+    // We should close the Hive box when app is closed
+    closeHiveDatabase();
+
     super.dispose();
   }
 

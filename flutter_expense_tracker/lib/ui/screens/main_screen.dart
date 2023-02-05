@@ -22,6 +22,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   listCallback() {
+    // Need to setState in order to update UI
     setState(() {});
   }
 
